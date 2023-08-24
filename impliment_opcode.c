@@ -27,3 +27,13 @@ void push_function(stack_t **stack, unsigned int value)
 	*stack = newNode;
 }
 
+void pall_function(stack_t **stack, unsigned int number)
+{
+	stack_t *current = *stack;
+
+	while (current != NULL)
+	{
+		printf("%d\n", current -> n);
+		current = current -> next;
+	}
+}
