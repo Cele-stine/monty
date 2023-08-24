@@ -13,8 +13,10 @@ int main(int argc, char *argv[])
 	FILE *file;
 	char *line = NULL;
 	size_t line_buffer_size = 0;
-	int line_num = 1;
+	unsigned int line_num = 1;
 	ssize_t read_line;
+	stack_t *stack;
+	stack_t *temp;
 
 	if (argc != 2)
 	{
@@ -32,9 +34,18 @@ int main(int argc, char *argv[])
 	file = fopen(file_path, "r");
 	while ((read_line = getline(&line, &line_buffer_size, file)) != -1)
 	{
+		if (line[strlen(line) - 1] == '\n')
+		{
+			line[strlen(line) - 1] = '\0';
+		}
+		process_command(line, &stack, line_num);
 		line_num++;
-		line[strcspn(line, "\n")] = '\0';
-		process_command(line, line_num);
+	}
+	while (stack != NULL)
+	{
+		temp = stack;
+		stack = stack -> next;
+		free(temp);
 	}
 	free(line);
 	fclose(file);

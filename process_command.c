@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <stdlib.h>
 
 /**
  * process_command - a function that processes instractions passed to the
@@ -8,16 +9,16 @@
  * Return: Nothing.
  */
 
-void process_command(const char *command, int line_num)
+void process_command(const char *command, stack_t **stack, unsigned int line_num)
 {
 	char *command_copy;
 	char *opcode;
 	size_t i;
-	char *opcodes;
 	int found_opcode = 0;
 	size_t num_opcodes;
-	char *args_str;
+	char *arg_str;
 	int value;
+
 	instruction_t opcodes[] = {
 		{"PUSH", push_function}
 	};
@@ -51,12 +52,12 @@ void process_command(const char *command, int line_num)
 				}
 				value = atoi(arg_str);
 				opcodes[i].f(stack, value);
-				else
-				{
-					opcodes[i].f(stack, line_num)
-				}
-				break;
 			}
+			else
+			{
+				opcodes[i].f(stack, line_num);
+			}
+			break;
 		}
 	}
 	if (!found_opcode)

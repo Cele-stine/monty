@@ -35,7 +35,7 @@ typedef struct instruction_s
         char *opcode;
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-
 int check_File_access(const char *path, int amed);
-void process_command(const char *command, int line_num);
+void process_command(const char *command, stack_t **stack, unsigned int line_num);
+void push_function(stack_t **stack, unsigned int value);
 #endif
