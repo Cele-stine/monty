@@ -26,14 +26,42 @@ void push_function(stack_t **stack, unsigned int value)
 	}
 	*stack = newNode;
 }
+/**
+ * pall_fanction - this is a function that prints the values passed to the monty
+ * opcode.
+ * @*stack: pointer to the stack of opcodes.
+ * Return: void.
+ */
 
-void pall_function(stack_t **stack, unsigned int number)
+void pall_function(stack_t **stack)
 {
 	stack_t *current = *stack;
+	size_t count = 0;
+	int *values;
+	size_t index;
+	size_t i = 0;
 
 	while (current != NULL)
 	{
 		printf("%d\n", current -> n);
 		current = current -> next;
 	}
+	values = malloc(count * sizeof(int));
+	if (values == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	index = count - 1;
+	while (current != NULL)
+	{
+		values[index] = current -> n;
+		index--;
+		current = current -> next;
+	}
+	for (i = 0; i < count; i++)
+	{
+		printf("%d\n", values[i]);
+	}
+	free(values);
 }

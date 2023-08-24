@@ -41,13 +41,13 @@ int main(int argc, char *argv[])
 		process_command(line, &stack, line_num);
 		line_num++;
 	}
+	free(line);
 	while (stack != NULL)
 	{
 		temp = stack;
-		stack = stack -> next;
+		stack = stack->next;
 		free(temp);
 	}
-	free(line);
 	fclose(file);
-	return (0);
+	return 0;
 }
