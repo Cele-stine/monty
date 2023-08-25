@@ -12,7 +12,7 @@
 void process_command(const char *command, stack_t **stack, unsigned int line_num)
 {
 	char *command_copy;
-	char *opcode;
+	char *opcod;
 	size_t i;
 	int found_opcode = 0;
 	size_t num_opcodes;
@@ -30,8 +30,8 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	opcode = strtok(command_copy, " ");
-	if (opcode == NULL)
+	opcod = strtok(command_copy, " \n\t");
+	if (opcod == NULL)
 	{
 		fprintf(stderr, "L<(%d)>: unknown instruction <(%s)>\n", line_num, command);
 		exit(EXIT_FAILURE);
@@ -40,12 +40,12 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 	num_opcodes = sizeof(opcodes) / sizeof(opcodes[0]);
 	for (i = 0; i < num_opcodes; i++)
 	{
-		if (strcmp(opcode, opcodes[i].opcode) == 0)
+		if (strcmp(opcod, opcodes[i].opcode) == 0)
 		{
 			found_opcode = 1;
-			if (strcmp(opcode, "push") == 0)
+			if (strcmp(opcod, "push") == 0)
 			{
-				arg_str = strtok(NULL, " ");
+				arg_str = strtok(NULL, " \n\t");
 				if (arg_str == NULL)
 				{
 					free(command_copy);
@@ -63,7 +63,7 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 	}
 	if (!found_opcode)
 	{
-		fprintf(stderr, "L<(%u)>: unknown instruction <(%s)>\n", line_num, opcode);
+		fprintf(stderr, "L<(%u)>: unknown instruction <(%s)>\n", line_num, opcod);
 		free(command_copy);
 		exit(EXIT_FAILURE);
 	}

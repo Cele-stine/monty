@@ -9,23 +9,35 @@
 
 void push_function(stack_t **stack, unsigned int value)
 {
-	stack_t *newNode;
+	int n, j = 0, flag = 0;
 
-	newNode = malloc(sizeof(stack_t));
-	if (newNode == NULL)
+	if (bus.arg)
 	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	newNode -> n = value;
-	newNode -> prev = NULL;
-	newNode -> next = *stack;
-	if (*stack != NULL)
-	{
-		newNode -> next = (*stack);
-	}
-	*stack = newNode;
+		if (bus.arg[0] == '-')
+			j++;
+		for (; bus.arg[j] != '\0'; j++)
+		{
+			if (bus.arg[j] > 57 || bus.arg[j] < 48)
+				flag = 1; }
+		if (flag == 1)
+		{ fprintf(stderr, "L%d: usage: push integer\n", value);
+			fclose(bus.file);
+			free(bus.content);
+			free(*stack);
+			exit(EXIT_FAILURE); }}
+	else
+	{ fprintf(stderr, "L%d: usage: push integer\n", value);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*stack);
+		exit(EXIT_FAILURE); }
+	n = atoi(bus.arg);
+	if (bus.lifi == 0)
+		addnode(stack, n);
+	else
+		addqueue(stack, n);
 }
+
 /**
  * pall_fanction - this is a function that prints the values passed to the monty
  * opcode.
