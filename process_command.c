@@ -20,7 +20,8 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 	int value;
 
 	instruction_t opcodes[] = {
-		{"PUSH", push_function}
+		{"push", push_function},
+		{"pall", pall_function},
 	};
 
 	command_copy = strdup(command);
@@ -42,7 +43,7 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 		if (strcmp(opcode, opcodes[i].opcode) == 0)
 		{
 			found_opcode = 1;
-			if (strcmp(opcode, "PUSH") == 0)
+			if (strcmp(opcode, "push") == 0)
 			{
 				arg_str = strtok(NULL, " ");
 				if (arg_str == NULL)

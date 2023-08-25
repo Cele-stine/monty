@@ -33,13 +33,15 @@ void push_function(stack_t **stack, unsigned int value)
  * Return: void.
  */
 
-void pall_function(stack_t **stack)
+void pall_function(stack_t **stack, unsigned int number)
 {
 	stack_t *current = *stack;
 	size_t count = 0;
 	int *values;
 	size_t index;
 	size_t i = 0;
+
+	(void)number;
 
 	while (current != NULL)
 	{
