@@ -9,33 +9,23 @@
 
 void push_function(stack_t **stack, unsigned int value)
 {
-	int n, j = 0, flag = 0;
+	stack_t *newNode;
 
-	if (bus.arg)
+	newNode = malloc(sizeof(stack_t));
+	if (newNode == NULL)
 	{
-		if (bus.arg[0] == '-')
-			j++;
-		for (; bus.arg[j] != '\0'; j++)
-		{
-			if (bus.arg[j] > 57 || bus.arg[j] < 48)
-				flag = 1; }
-		if (flag == 1)
-		{ fprintf(stderr, "L%d: usage: push integer\n", value);
-			fclose(bus.file);
-			free(bus.content);
-			free(*stack);
-			exit(EXIT_FAILURE); }}
-	else
-	{ fprintf(stderr, "L%d: usage: push integer\n", value);
-		fclose(bus.file);
-		free(bus.content);
-		free(*stack);
-		exit(EXIT_FAILURE); }
-	n = atoi(bus.arg);
-	if (bus.lifi == 0)
-		addnode(stack, n);
-	else
-		addqueue(stack, n);
+		fprintf(stderr, "Error: malloc failed");
+		exit(EXIT_FAILURE);
+	}
+	newNode -> n = value;
+	newNode -> prev = NULL;
+	newNode -> next = (*stack);
+
+	if (*stack != NULL)
+	{
+		(*stack) -> prev = newNode;
+	}
+	*stack = newNode;
 }
 
 /**

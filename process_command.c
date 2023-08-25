@@ -16,8 +16,8 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 	size_t i;
 	int found_opcode = 0;
 	size_t num_opcodes;
-	char *arg_str;
 	int value;
+	char *arg;
 
 	instruction_t opcodes[] = {
 		{"push", push_function},
@@ -45,13 +45,13 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 			found_opcode = 1;
 			if (strcmp(opcod, "push") == 0)
 			{
-				arg_str = strtok(NULL, " \n\t");
-				if (arg_str == NULL)
+				arg = strtok(NULL, " \n\t");
+				if (arg == NULL)
 				{
 					free(command_copy);
 					exit(EXIT_FAILURE);
 				}
-				value = atoi(arg_str);
+				value = atoi(arg);
 				opcodes[i].f(stack, value);
 			}
 			else
