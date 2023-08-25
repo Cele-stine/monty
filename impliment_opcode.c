@@ -29,7 +29,7 @@ void push_function(stack_t **stack, unsigned int value)
 	{ fprintf(stderr, "L%d: usage: push integer\n", value);
 		fclose(bus.file);
 		free(bus.content);
-		free_stack(*stack);
+		free(*stack);
 		exit(EXIT_FAILURE); }
 	n = atoi(bus.arg);
 	if (bus.lifi == 0)

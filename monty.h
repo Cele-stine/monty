@@ -57,4 +57,6 @@ int check_File_access(const char *path, int amed);
 void process_command(const char *command, stack_t **stack, unsigned int line_num);
 void push_function(stack_t **stack, unsigned int value);
 void pall_function(stack_t **stack, unsigned int number);
+void addqueue(stack_t **head, int n);
+void addnode(stack_t **head, int n);
 #endif
