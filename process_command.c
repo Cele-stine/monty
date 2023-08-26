@@ -54,6 +54,17 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 				value = atoi(arg);
 				opcodes[i].f(stack, value);
 			}
+			else if (strcmp(opcod, "pall") == 0)
+                        {
+                                arg = strtok(NULL, " \n\t");
+                                if (arg == NULL)
+                                {
+                                        free(command_copy);
+                                        exit(EXIT_FAILURE);
+                                }
+                                value = atoi(arg);
+                                opcodes[i].f(stack, value);
+                        }
 			else
 			{
 				opcodes[i].f(stack, line_num);

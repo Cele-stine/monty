@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	}
 
 	file_path = argv[1];
-	if (!check_File_access(file_path, R_OK))
+	if (access(file_path, F_OK) == -1)
 	{
 		fprintf(stderr, "Error: Can't read file\n");
 		exit(EXIT_FAILURE);
