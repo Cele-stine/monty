@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't read file\n");
 		exit(EXIT_FAILURE);
 	}
-
 	file = fopen(file_path, "r");
 	while ((read_line = getline(&line, &line_buffer_size, file)) != -1)
 	{
@@ -49,5 +48,5 @@ int main(int argc, char *argv[])
 		free(temp);
 	}
 	fclose(file);
-	return 0;
+	return (0);
 }

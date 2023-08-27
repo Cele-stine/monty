@@ -34,8 +34,8 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 	if (opcod == NULL)
 	{
 		fprintf(stderr, "L<(%d)>: unknown instruction <(%s)>\n", line_num, command);
-		exit(EXIT_FAILURE);
 		free(command_copy);
+		exit(EXIT_FAILURE);
 	}
 	num_opcodes = sizeof(opcodes) / sizeof(opcodes[0]);
 	for (i = 0; i < num_opcodes; i++)
@@ -43,31 +43,18 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 		if (strcmp(opcod, opcodes[i].opcode) == 0)
 		{
 			found_opcode = 1;
-			if (strcmp(opcod, "push") == 0)
+			arg = strtok(NULL, " \n\t");
+			value = arg ? atoi(arg) : 0;
+			switch(i)
 			{
-				arg = strtok(NULL, " \n\t");
-				if (arg == NULL)
-				{
-					free(command_copy);
-					exit(EXIT_FAILURE);
-				}
-				value = atoi(arg);
-				opcodes[i].f(stack, value);
-			}
-			else if (strcmp(opcod, "pall") == 0)
-                        {
-                                arg = strtok(NULL, " \n\t");
-                                if (arg == NULL)
-                                {
-                                        free(command_copy);
-                                        exit(EXIT_FAILURE);
-                                }
-                                value = atoi(arg);
-                                opcodes[i].f(stack, value);
-                        }
-			else
-			{
-				opcodes[i].f(stack, line_num);
+				case 0:
+					opcodes[i].f(stack, value);
+					break;
+				case 1:
+					opcodes[i].f(stack, line_num);
+					break;
+				default:
+					break;
 			}
 			break;
 		}
@@ -75,7 +62,6 @@ void process_command(const char *command, stack_t **stack, unsigned int line_num
 	if (!found_opcode)
 	{
 		fprintf(stderr, "L<(%u)>: unknown instruction <(%s)>\n", line_num, opcod);
-		free(command_copy);
 		exit(EXIT_FAILURE);
 	}
 	free(command_copy);
